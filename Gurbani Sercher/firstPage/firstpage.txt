@@ -1,0 +1,572 @@
+main.kt
+
+package com.example.finalgurbanisearcher
+
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.view.Menu
+import android.widget.FrameLayout
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomappbar.BottomAppBar
+import com.google.android.material.bottomnavigation.BottomNavigationMenuView
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.tabs.TabLayout
+
+class MainActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+
+//
+
+        // This will pass the ArrayList to our Adapter
+
+        // Setting the Adapter with the recyclerview
+
+        val firstFragment = Home()
+        val secondFragment = HukamNama()
+        val thirdFragment = RestoreData()
+        val fourthFragment = BackupData()
+        val fifthFragment = ShabadKosh()
+
+
+
+        setCurrentFragment(firstFragment)
+
+        val bottomMenuBar:BottomNavigationView? = findViewById<BottomNavigationView>(R.id.bottomMenuBar)
+        bottomMenuBar?.setOnNavigationItemSelectedListener {
+
+            when (it.itemId) {
+                R.id.home -> setCurrentFragment(firstFragment)
+                R.id.hukamnama -> setCurrentFragment(secondFragment)
+                R.id.restoreData -> setCurrentFragment(thirdFragment)
+                R.id.backData -> setCurrentFragment(fourthFragment)
+                R.id.shabadkosh -> setCurrentFragment(fifthFragment)
+
+            }
+            true
+        }
+
+    }
+    private fun setCurrentFragment(fragment:Fragment)=
+        supportFragmentManager.beginTransaction().apply {
+            replace(R.id.frameLayout,fragment)
+            commit()
+        }
+
+
+
+
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+
+        menuInflater.inflate(R.menu.menu_main,menu)
+        return true
+    }
+
+
+}
+
+
+________________________________________________________________________________________________________________
+
+
+home.xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/homePageBackgroundColor"
+    tools:context=".MainActivity">
+
+    <SearchView
+        android:layout_width="350dp"
+        android:layout_height="38dp"
+        android:background="@drawable/bannar"
+        android:iconifiedByDefault="false"
+        android:queryHint="Search here"
+        app:circularflow_radiusInDP="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.028"
+        app:queryBackground="@null"
+        app:submitBackground="@drawable/bg_rounded"
+        tools:ignore="MissingConstraints" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="350dp"
+        android:layout_height="132dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:backgroundTint="#3a3a4c"
+        app:cardCornerRadius="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.36"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.146"
+        tools:ignore="MissingConstraints">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="Welcome to Gurbani "
+                android:textColor="@color/white"
+                android:textSize="15dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="224dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="lorem lpsum,sometimes reffered"
+                android:textColor="@color/white"
+                android:textSize="10dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="86dp"
+                android:layout_height="29dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="12dp"
+                android:text="Get 15% off >"
+                android:textSize="7dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView4"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="95dp"
+                android:layout_marginEnd="16dp"
+                android:src="@drawable/men_image"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.594"
+                app:layout_constraintStart_toEndOf="@+id/textView4"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.432" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardView"
+        tools:ignore="MissingConstraints">
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                android:orientation="vertical">
+
+                <HorizontalScrollView
+                    android:id="@+id/horizontalScrollView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/homePageBackgroundColor"
+                    android:scrollbarThumbHorizontal="@null"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="MissingConstraints">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@color/homePageBackgroundColor">
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:background="@drawable/bannar"
+                            android:backgroundTint="@color/homePageOtherColor"
+                            tools:layout_editor_absoluteX="1dp"
+                            tools:layout_editor_absoluteY="132dp">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/compiled_hymns">
+
+                                </ImageView>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Compiled Hymns"
+                                    android:textColor="@color/white">
+
+                                </TextView>
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:background="@color/homePageOtherColor"
+                            tools:layout_editor_absoluteX="1dp"
+                            tools:layout_editor_absoluteY="132dp">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@color/homePageOtherColor"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+
+                                    android:src="@drawable/calender_2x">
+
+                                </ImageView>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="   Calender    "
+                                    android:textColor="@color/white">
+
+                                </TextView>
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:background="@color/white"
+                            tools:layout_editor_absoluteX="1dp"
+
+                            tools:layout_editor_absoluteY="132dp">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@color/homePageOtherColor"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/radio_icon_2x">
+
+                                </ImageView>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Live Kirtan"
+                                    android:textColor="@color/white">
+
+                                </TextView>
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:background="@color/homePageOtherColor"
+                            tools:layout_editor_absoluteX="1dp"
+
+                            tools:layout_editor_absoluteY="132dp">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@color/homePageOtherColor"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/youtube_2x">
+
+                                </ImageView>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+
+                                    android:text="Gurbani Videos"
+                                    android:textColor="@color/white">
+
+                                </TextView>
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+
+                    </LinearLayout>
+                </HorizontalScrollView>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerview"
+                    android:layout_width="match_parent"
+                    android:layout_height="1000dp"
+                    android:nestedScrollingEnabled="false"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView"
+                    app:layout_constraintVertical_bias="0.0"
+                    tools:ignore="MissingConstraints"
+                    tools:itemCount="20"
+                    tools:listitem="@layout/card_view_design" />
+            </LinearLayout>
+
+
+
+    </ScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+_________________________________________________________________________________________________________________
+
+
+home.kt
+
+package com.example.finalgurbanisearcher
+
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.Button
+import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+
+class Home : Fragment() {
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+val view = inflater.inflate(R.layout.home,container,false)
+
+        val recyclerview = view.findViewById<RecyclerView?>(R.id.recyclerview)
+
+        val disabler :(RecyclerView.OnItemTouchListener)=RecyclerViewDisabler()
+
+        recyclerview?.addOnItemTouchListener(disabler)
+
+        recyclerview?.layoutManager = LinearLayoutManager(context)
+
+
+
+
+
+
+        val data = ArrayList<ItemsViewModel>()
+
+        for (i in 1..10) {
+            data.add(ItemsViewModel(R.drawable.book3x, "Item $i"))
+        }
+        var adap = CustomAdapter(data)
+        recyclerview?.adapter=adap
+
+return (view)
+    }
+}
+
+
+____________________________________________________________________________________________________________________
+
+cardview_design.xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:background="@color/homePageOtherColor"
+    app:cardElevation="6dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:background="@color/homePageOtherColor"
+        android:padding="5dp">
+
+        <ImageView
+            android:id="@+id/imageview"
+            android:layout_width="70sp"
+            android:layout_height="50sp" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="15dp"
+            android:text="Item"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
+
+________________________________________________________________________________________________________
+
+
+customadaptar.kt
+
+package com.example.finalgurbanisearcher
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
+import android.widget.Toast
+import androidx.recyclerview.widget.RecyclerView
+
+class CustomAdapter(private val mList: List<ItemsViewModel>) : RecyclerView.Adapter<CustomAdapter.ViewHolder>() {
+
+    // create new views
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        // inflates the card_view_design view
+        // that is used to hold list item
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.card_view_design, parent, false)
+
+        return ViewHolder(view)
+    }
+
+    // binds the list items to a view
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+
+        val ItemsViewModel = mList[position]
+
+        // sets the image to the imageview from our itemHolder class
+        holder.imageView.setImageResource(ItemsViewModel.image)
+
+        // sets the text to the textview from our itemHolder class
+        holder.textView.text = ItemsViewModel.text
+
+    }
+
+    // return the number of the items in the list
+    override fun getItemCount(): Int {
+        return mList.size
+    }
+
+    // Holds the views for adding it to image and text
+    class ViewHolder(ItemView: View) : RecyclerView.ViewHolder(ItemView) {
+
+
+        val imageView: ImageView = itemView.findViewById(R.id.imageview)
+        val textView: TextView = itemView.findViewById(R.id.textView)
+
+    }
+}
+
+//        override fun onClick(view: View) {
+//            Toast.makeText(view.context, "position = $adapterPosition", Toast.LENGTH_SHORT).show()
+//        }
+//        private fun ViewHolder(itemView: View) {
+//            itemView.setOnClickListener(this)
+//
+//        }
+
+
+//        override fun onClick(itemView: View?) {
+//
+//            Toast.makeText(itemView?.getContext(), "position =   ${getAdapterPosition()}", Toast.LENGTH_SHORT).show()
+//
+//        }
+
+
+________________________________________________________________________________________________________________________
+
+itemviewmodel.kt
+
+
+package com.example.finalgurbanisearcher
+
+data class ItemsViewModel(val image: Int, val text: String) {
+}
+
+
+_______________________________________________________________________________________________________________________
+
+
+recyclerViewDisabler.kt
+
+package com.example.finalgurbanisearcher
+
+import android.view.MotionEvent
+import androidx.recyclerview.widget.RecyclerView
+
+  class RecyclerViewDisabler:RecyclerView.OnItemTouchListener {
+     override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
+return true
+
+     }
+
+     override fun onTouchEvent(rv: RecyclerView, e: MotionEvent) {
+     }
+
+     override fun onRequestDisallowInterceptTouchEvent(disallowIntercept: Boolean) {
+     }
+ }
+
